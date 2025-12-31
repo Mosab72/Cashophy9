@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة الراتب والاستقطاع | Cashophy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/calculator-page.css">
+    <link rel="stylesheet" href="css/salary-page.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <span>Cashophy</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="calculator.html">حاسبة القروض</a></li>
+                <li><a href="salary.html" class="active">حاسبة الراتب</a></li>
+                <li><a href="analysis.html">التحليل المالي</a></li>
+                <li><a href="schedule.html">جدول السداد</a></li>
+                <li><a href="compare.html">مقارنة القروض</a></li>
+                <li><a href="library.html">مكتبة توعوية</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-wallet"></i> حاسبة الراتب والاستقطاع</h1>
+            <p>اعرف كم راح يبقى معك من راتبك بعد خصم القرض والالتزامات</p>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calculator-layout">
+                <!-- Input Panel -->
+                <div class="input-panel">
+                    <h2>أدخل بياناتك المالية</h2>
+                    
+                    <div class="input-group">
+                        <label for="monthlySalary">
+                            <i class="fas fa-money-bill-wave"></i>
+                            الراتب الشهري
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="monthlySalary" placeholder="مثال: 15000" value="15000">
+                            <span class="input-suffix">ريال</span>
+                        </div>
+                        <small class="input-hint">راتبك الأساسي الشهري (بدون بدلات)</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="allowances">
+                            <i class="fas fa-plus-circle"></i>
+                            البدلات الشهرية (اختياري)
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="allowances" placeholder="مثال: 2000" value="0">
+                            <span class="input-suffix">ريال</span>
+                        </div>
+                        <small class="input-hint">بدل السكن، المواصلات، وغيرها</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="currentCommitments">
+                            <i class="fas fa-credit-card"></i>
+                            الالتزامات الحالية
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="currentCommitments" placeholder="مثال: 2000" value="2000">
+                            <span class="input-suffix">ريال</span>
+                        </div>
+                        <small class="input-hint">أقساط قروض أو بطاقات ائتمان حالية</small>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <h3 class="section-title">بيانات القرض الجديد</h3>
+
+                    <div class="input-group">
+                        <label for="salaryLoanAmount">
+                            <i class="fas fa-hand-holding-usd"></i>
+                            مبلغ القرض المطلوب
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="salaryLoanAmount" placeholder="مثال: 100000" value="100000">
+                            <span class="input-suffix">ريال</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="salaryLoanPeriod">
+                            <i class="fas fa-calendar"></i>
+                            مدة القرض
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="salaryLoanPeriod" placeholder="مثال: 5" value="5">
+                            <span class="input-suffix">سنة</span>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="salaryInterestRate">
+                            <i class="fas fa-percent"></i>
+                            نسبة الفائدة
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="salaryInterestRate" placeholder="مثال: 5" value="5" step="0.1">
+                            <span class="input-suffix">%</span>
+                        </div>
+                    </div>
+
+                    <button class="btn-calculate-full" onclick="calculateSalaryImpact()">
+                        <i class="fas fa-calculator"></i>
+                        احسب التأثير على راتبك
+                    </button>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="results-panel" id="salaryResultsPanel">
+                    <h2>تحليل راتبك</h2>
+                    
+                    <!-- Salary Breakdown -->
+                    <div class="salary-breakdown">
+                        <div class="breakdown-item total">
+                            <div class="breakdown-label">إجمالي الدخل الشهري</div>
+                            <div class="breakdown-value" id="totalIncome">-</div>
+                        </div>
+                    </div>
+
+                    <!-- Deductions -->
+                    <div class="deductions-section">
+                        <h3><i class="fas fa-minus-circle"></i> الاستقطاعات الشهرية</h3>
+                        
+                        <div class="deduction-item">
+                            <div class="deduction-label">
+                                <i class="fas fa-credit-card"></i>
+                                الالتزامات الحالية
+                            </div>
+                            <div class="deduction-value" id="currentDeduction">-</div>
+                            <div class="deduction-percent" id="currentPercent">-</div>
+                        </div>
+
+                        <div class="deduction-item new-loan">
+                            <div class="deduction-label">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                                قسط القرض الجديد
+                            </div>
+                            <div class="deduction-value" id="newLoanPayment">-</div>
+                            <div class="deduction-percent" id="newLoanPercent">-</div>
+                        </div>
+
+                        <div class="deduction-total">
+                            <div class="deduction-label">
+                                <strong>إجمالي الاستقطاعات</strong>
+                            </div>
+                            <div class="deduction-value" id="totalDeductions">-</div>
+                            <div class="deduction-percent" id="totalPercent">-</div>
+                        </div>
+                    </div>
+
+                    <!-- Remaining Salary -->
+                    <div class="remaining-salary" id="remainingSalaryBox">
+                        <div class="remaining-label">الراتب المتبقي بعد الأقساط</div>
+                        <div class="remaining-value" id="remainingSalary">-</div>
+                        <div class="remaining-desc" id="remainingDesc">-</div>
+                    </div>
+
+                    <!-- Status Alert -->
+                    <div class="status-alert" id="statusAlert">
+                        <div class="alert-icon">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="alert-content" id="alertContent">
+                            أدخل البيانات واضغط احسب لترى التقييم
+                        </div>
+                    </div>
+
+                    <!-- Visual Bar -->
+                    <div class="salary-visual">
+                        <h3><i class="fas fa-chart-bar"></i> توزيع الراتب</h3>
+                        <div class="visual-bar">
+                            <div class="bar-segment available" id="barAvailable" style="width: 0%">
+                                <span class="bar-label" id="barAvailableLabel">0%</span>
+                            </div>
+                            <div class="bar-segment committed" id="barCommitted" style="width: 0%">
+                                <span class="bar-label" id="barCommittedLabel">0%</span>
+                            </div>
+                        </div>
+                        <div class="visual-legend">
+                            <div class="legend-item">
+                                <span class="legend-color available"></span>
+                                <span>متاح للصرف</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color committed"></span>
+                                <span>ملتزم به (أقساط)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Borrowing Capacity -->
+                    <div class="capacity-section" id="capacitySection">
+                        <h3><i class="fas fa-hand-holding-usd"></i> قدرتك على الاقتراض</h3>
+                        <div class="capacity-info">
+                            <div class="capacity-item">
+                                <div class="capacity-label">أقصى قسط شهري ممكن</div>
+                                <div class="capacity-value" id="maxMonthlyPayment">-</div>
+                                <small>بناءً على قاعدة 33% من الدخل</small>
+                            </div>
+                            <div class="capacity-item">
+                                <div class="capacity-label">أقصى مبلغ قرض ممكن</div>
+                                <div class="capacity-value highlight" id="maxLoanAmount">-</div>
+                                <small>بنفس الفائدة والمدة المذكورة</small>
+                            </div>
+                        </div>
+                        <div class="capacity-message" id="capacityMessage"></div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="quick-links">
+                        <a href="analysis.html" class="quick-link-btn">
+                            <i class="fas fa-chart-pie"></i>
+                            التحليل المالي الكامل
+                        </a>
+                        <a href="calculator.html" class="quick-link-btn">
+                            <i class="fas fa-calculator"></i>
+                            عدّل بيانات القرض
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Notes -->
+    <section class="notes-section">
+        <div class="container">
+            <h2><i class="fas fa-exclamation-triangle"></i> ملاحظات مهمة</h2>
+            <div class="notes-grid">
+                <div class="note-card">
+                    <div class="note-number">33%</div>
+                    <h3>الحد الأقصى المعتمد بنكياً</h3>
+                    <p>البنوك عادةً ما تسمح باستقطاع حتى 33% من راتبك للأقساط. تجاوز هذه النسبة يعني رفض القرض.</p>
+                </div>
+
+                <div class="note-card">
+                    <div class="note-number">25%</div>
+                    <h3>الحد الآمن الموصى به</h3>
+                    <p>الخبراء الماليين ينصحون بعدم تجاوز 25% من الدخل للأقساط، حفاظاً على جودة الحياة.</p>
+                </div>
+
+                <div class="note-card">
+                    <div class="note-number">50%</div>
+                    <h3>خطر على نمط حياتك</h3>
+                    <p>لو نص راتبك أو أكثر يروح للأقساط، راح تواجه صعوبة كبيرة في تغطية مصاريفك الأساسية.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="fas fa-coins"></i>
+                        <span>Cashophy</span>
+                    </div>
+                    <p>موقعك الأول لحساب القروض والتخطيط المالي الذكي</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="calculator.html">حاسبة القروض</a></li>
+                        <li><a href="salary.html">حاسبة الراتب</a></li>
+                        <li><a href="analysis.html">التحليل المالي</a></li>
+                        <li><a href="library.html">مكتبة توعوية</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-disclaimer">
+                    <h4>إخلاء مسؤولية</h4>
+                    <p>الأرقام والنتائج المعروضة هي تقديرات وقد تختلف عن الأرقام الفعلية. يُنصح باستشارة البنك أو مستشار مالي قبل اتخاذ أي قرار.</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2024 Cashophy. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/salary-page.js"></script>
+</body>
+</html>

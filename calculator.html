@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة القروض | Cashophy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/calculator-page.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <span>Cashophy</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="calculator.html" class="active">حاسبة القروض</a></li>
+                <li><a href="salary.html">حاسبة الراتب</a></li>
+                <li><a href="analysis.html">التحليل المالي</a></li>
+                <li><a href="schedule.html">جدول السداد</a></li>
+                <li><a href="compare.html">مقارنة القروض</a></li>
+                <li><a href="library.html">مكتبة توعوية</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-calculator"></i> حاسبة القروض الكاملة</h1>
+            <p>احسب كل تفاصيل القرض بدقة عالية مع شرح لكل رقم ونسبة</p>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <div class="calculator-layout">
+                <!-- Input Panel -->
+                <div class="input-panel">
+                    <h2>أدخل بيانات القرض</h2>
+                    
+                    <div class="input-group">
+                        <label for="calcLoanAmount">
+                            <i class="fas fa-money-bill-wave"></i>
+                            مبلغ القرض
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="calcLoanAmount" placeholder="مثال: 200000" value="200000">
+                            <span class="input-suffix">ريال</span>
+                        </div>
+                        <small class="input-hint">المبلغ الكامل اللي راح تقترضه من البنك</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="calcLoanPeriod">
+                            <i class="fas fa-calendar-alt"></i>
+                            مدة القرض
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="calcLoanPeriod" placeholder="مثال: 10" value="10">
+                            <span class="input-suffix">سنة</span>
+                        </div>
+                        <small class="input-hint">كم سنة راح تسدد القرض</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="calcInterestRate">
+                            <i class="fas fa-percent"></i>
+                            نسبة الفائدة السنوية
+                        </label>
+                        <div class="input-wrapper">
+                            <input type="number" id="calcInterestRate" placeholder="مثال: 4.5" value="4.5" step="0.1">
+                            <span class="input-suffix">%</span>
+                        </div>
+                        <small class="input-hint">النسبة اللي راح يحسبها البنك على القرض</small>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="calcInterestType">
+                            <i class="fas fa-chart-line"></i>
+                            نوع الفائدة
+                        </label>
+                        <select id="calcInterestType" class="select-input">
+                            <option value="decreasing" selected>متناقصة (الأكثر شيوعاً)</option>
+                            <option value="fixed">ثابتة (نادرة)</option>
+                        </select>
+                        <small class="input-hint">الفائدة المتناقصة: تحسب على الرصيد المتبقي فقط</small>
+                    </div>
+
+                    <button class="btn-calculate-full" onclick="calculateFull()">
+                        <i class="fas fa-calculator"></i>
+                        احسب التفاصيل الكاملة
+                    </button>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="results-panel" id="resultsPanel">
+                    <h2>نتائج الحساب</h2>
+                    
+                    <!-- Main Result -->
+                    <div class="main-result">
+                        <div class="main-result-label">القسط الشهري</div>
+                        <div class="main-result-value" id="fullMonthlyPayment">-</div>
+                        <div class="main-result-desc">المبلغ اللي راح ينخصم من حسابك كل شهر</div>
+                    </div>
+
+                    <!-- Detailed Results -->
+                    <div class="results-grid">
+                        <div class="result-box">
+                            <div class="result-icon success">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </div>
+                            <div class="result-info">
+                                <div class="result-label">إجمالي المبلغ المدفوع</div>
+                                <div class="result-value" id="fullTotalPayment">-</div>
+                                <div class="result-hint">مبلغ القرض + الفائدة</div>
+                            </div>
+                        </div>
+
+                        <div class="result-box">
+                            <div class="result-icon danger">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </div>
+                            <div class="result-info">
+                                <div class="result-label">إجمالي الفائدة</div>
+                                <div class="result-value danger" id="fullTotalInterest">-</div>
+                                <div class="result-hint">المبلغ اللي راح للبنك</div>
+                            </div>
+                        </div>
+
+                        <div class="result-box">
+                            <div class="result-icon warning">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="result-info">
+                                <div class="result-label">نسبة الفائدة من القرض</div>
+                                <div class="result-value warning" id="fullInterestPercent">-</div>
+                                <div class="result-hint">كم % زيادة على المبلغ</div>
+                            </div>
+                        </div>
+
+                        <div class="result-box">
+                            <div class="result-icon info">
+                                <i class="fas fa-calculator"></i>
+                            </div>
+                            <div class="result-info">
+                                <div class="result-label">عدد الأقساط</div>
+                                <div class="result-value" id="fullTotalPayments">-</div>
+                                <div class="result-hint">إجمالي عدد الدفعات</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analysis Box -->
+                    <div class="analysis-box" id="fullAnalysis">
+                        <div class="analysis-header">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>التحليل والتوصية</h3>
+                        </div>
+                        <div class="analysis-content" id="fullAnalysisText">
+                            أدخل البيانات واضغط احسب لترى التحليل التفصيلي
+                        </div>
+                    </div>
+
+                    <!-- Comparison Chart -->
+                    <div class="comparison-chart">
+                        <h3><i class="fas fa-chart-pie"></i> توزيع المبلغ المدفوع</h3>
+                        <div class="chart-visual">
+                            <div class="chart-bar">
+                                <div class="chart-segment principal" id="chartPrincipal" style="width: 0%">
+                                    <span class="chart-label" id="chartPrincipalLabel">0%</span>
+                                </div>
+                                <div class="chart-segment interest" id="chartInterest" style="width: 0%">
+                                    <span class="chart-label" id="chartInterestLabel">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <span class="legend-color principal"></span>
+                                <span>مبلغ القرض الأصلي</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-color interest"></span>
+                                <span>الفائدة (ربح البنك)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="quick-links">
+                        <a href="schedule.html" class="quick-link-btn">
+                            <i class="fas fa-table"></i>
+                            شوف جدول السداد التفصيلي
+                        </a>
+                        <a href="salary.html" class="quick-link-btn">
+                            <i class="fas fa-wallet"></i>
+                            احسب تأثيره على راتبك
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="tips-section">
+        <div class="container">
+            <h2><i class="fas fa-info-circle"></i> نصائح مهمة قبل ما تاخذ قرض</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>انتبه لنسبة الاستقطاع</h3>
+                    <p>لا تخلي قسط القرض يتجاوز 33% من راتبك، عشان ما يأثر على مستوى معيشتك</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>قصّر مدة القرض لو تقدر</h3>
+                    <p>كل ما قصرت المدة، كل ما قلّت الفائدة اللي راح تدفعها للبنك</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-search-dollar"></i>
+                    </div>
+                    <h3>قارن بين البنوك</h3>
+                    <p>فرق بسيط في نسبة الفائدة ممكن يوفر عليك آلاف الريالات</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <h3>فكر في السداد المبكر</h3>
+                    <p>لو عندك مبلغ إضافي، السداد المبكر يوفر عليك فوائد كثيرة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="fas fa-coins"></i>
+                        <span>Cashophy</span>
+                    </div>
+                    <p>موقعك الأول لحساب القروض والتخطيط المالي الذكي</p>
+                </div>
+
+                <div class="footer-links">
+                    <h4>روابط سريعة</h4>
+                    <ul>
+                        <li><a href="calculator.html">حاسبة القروض</a></li>
+                        <li><a href="salary.html">حاسبة الراتب</a></li>
+                        <li><a href="analysis.html">التحليل المالي</a></li>
+                        <li><a href="library.html">مكتبة توعوية</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-disclaimer">
+                    <h4>إخلاء مسؤولية</h4>
+                    <p>الأرقام والنتائج المعروضة هي تقديرات وقد تختلف عن الأرقام الفعلية. يُنصح باستشارة البنك أو مستشار مالي قبل اتخاذ أي قرار.</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2024 Cashophy. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/calculator-page.js"></script>
+</body>
+</html>

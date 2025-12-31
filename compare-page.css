@@ -1,0 +1,166 @@
+.compare-section {
+    padding: 60px 0;
+}
+
+.compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.loan-card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+}
+
+.loan-card.winner {
+    border: 3px solid var(--success);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.card-header h3 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.card-body .input-group {
+    margin-bottom: 20px;
+}
+
+.card-body label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+.card-body input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.card-results {
+    background: var(--bg-secondary);
+    padding: 20px;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-item span {
+    color: var(--text-secondary);
+}
+
+.result-item strong {
+    color: var(--primary);
+    font-size: 16px;
+}
+
+.btn-compare {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-compare:hover {
+    transform: translateY(-2px);
+}
+
+.comparison-result {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.comparison-result h2 {
+    font-size: 28px;
+    font-weight: 900;
+    margin-bottom: 30px;
+}
+
+.winner-card {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 40px;
+    border-radius: var(--radius-lg);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.winner-icon {
+    font-size: 60px;
+    margin-bottom: 20px;
+}
+
+.winner-card h3 {
+    font-size: 32px;
+    font-weight: 900;
+    margin-bottom: 15px;
+}
+
+.winner-card p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    opacity: 0.95;
+}
+
+.savings-info {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: var(--radius-md);
+    margin-top: 20px;
+}
+
+.savings-info span {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.savings-info strong {
+    font-size: 36px;
+    font-weight: 900;
+}
+
+@media (max-width: 768px) {
+    .compare-grid {
+        grid-template-columns: 1fr;
+    }
+}

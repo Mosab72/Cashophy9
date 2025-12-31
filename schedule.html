@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جدول السداد | Cashophy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/schedule-page.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <span>Cashophy</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="calculator.html">حاسبة القروض</a></li>
+                <li><a href="salary.html">حاسبة الراتب</a></li>
+                <li><a href="analysis.html">التحليل المالي</a></li>
+                <li><a href="schedule.html" class="active">جدول السداد</a></li>
+                <li><a href="compare.html">مقارنة القروض</a></li>
+                <li><a href="library.html">مكتبة توعوية</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1><i class="fas fa-table"></i> جدول السداد التفصيلي</h1>
+            <p>شوف تفاصيل كل دفعة: رأس المال، الفائدة، والرصيد المتبقي</p>
+        </div>
+    </section>
+
+    <section class="schedule-section">
+        <div class="container">
+            <div class="schedule-inputs">
+                <h2>بيانات القرض</h2>
+                <div class="inputs-grid">
+                    <div class="input-group">
+                        <label>مبلغ القرض</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="schedLoanAmount" value="200000">
+                            <span class="input-suffix">ريال</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>المدة</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="schedPeriod" value="10">
+                            <span class="input-suffix">سنة</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>نسبة الفائدة</label>
+                        <div class="input-wrapper">
+                            <input type="number" id="schedRate" value="4.5" step="0.1">
+                            <span class="input-suffix">%</span>
+                        </div>
+                    </div>
+                    <button class="btn-generate" onclick="generateSchedule()">
+                        <i class="fas fa-table"></i> أنشئ الجدول
+                    </button>
+                </div>
+            </div>
+
+            <div class="schedule-table" id="scheduleTable" style="display:none;">
+                <div class="table-header">
+                    <h3>الجدول التفصيلي</h3>
+                    <div class="table-actions">
+                        <button onclick="printSchedule()" class="btn-action">
+                            <i class="fas fa-print"></i> طباعة
+                        </button>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="amortizationTable">
+                        <thead>
+                            <tr>
+                                <th>الشهر</th>
+                                <th>القسط الشهري</th>
+                                <th>رأس المال</th>
+                                <th>الفائدة</th>
+                                <th>الرصيد المتبقي</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <i class="fas fa-coins"></i>
+                        <span>Cashophy</span>
+                    </div>
+                    <p>موقعك الأول لحساب القروض والتخطيط المالي الذكي</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Cashophy. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/calculator.js"></script>
+    <script src="js/schedule-page.js"></script>
+</body>
+</html>
